@@ -4,13 +4,13 @@ A personal archive of Kubernetes Custom Resource Definitions (CRDs) extracted fr
 
 ## Usage
 
-Schemas are served at `https://kubernetes-schemas.noirprime.com` and can be used with tools like [kubeconform](https://github.com/yannh/kubeconform):
+Schemas are served at `https://soulwhisper.github.io/CRD-catalog/` and can be used with tools like [kubeconform](https://github.com/yannh/kubeconform):
 
 ```yaml
 # .kubeconform.yaml
 schema-location:
   - default
-  - "https://kubernetes-schemas.noirprime.com/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
+  - "https://soulwhisper.github.io/CRD-catalog/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
 ```
 
 ## Schema location
