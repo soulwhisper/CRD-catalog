@@ -96,12 +96,12 @@ directories:
       tags:
       - v1.8.4
     path: notification-controller
-  - configDigest: 90d6f0a467aa8e39e3110656ad283bfdca21547dcc1e9db99054b8bdf1c9d470
+  - configDigest: f0fd98fe92513906a5aaa2dc77f81cd4e22ad42c7b170d20ffe88beecbcf50ba
     git:
-      commitTitle: 'Merge pull request #1295 from fluxcd/release-v1.8.4...'
-      sha: f98e1eb5aa97adbdbe33018d4b9dd1e47763fad0
+      commitTitle: 'Merge pull request #1654 from fluxcd/release-v1.8.5...'
+      sha: b74fb3e4106f8b95f2d9ac8b9565a29067b9d5d4
       tags:
-      - v1.8.4
+      - v1.8.5
     path: kustomize-controller
   - configDigest: 59923a4c5e4b6d5a14032cee4aee71a81e82c7271e96a65fa07458044ec0e4ae
     git:
