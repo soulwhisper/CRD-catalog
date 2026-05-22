@@ -1,0 +1,211 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - configDigest: e0da2edebb2693cb92d92fcf0f44f1aae71f6b035d19c042813cc71e5e9616f4
+    git:
+      commitTitle: 'api: allow validation on older k8s versions (#1838)...'
+      sha: 6a2d02dbb35a289738d0fdba88e5a474e432a72a
+      tags:
+      - v1.2.1
+    path: .
+  path: _sources/agentgateway
+- contents:
+  - configDigest: 83b653edabfead1e1a844b3313923f34cce8dc404933ac6d17a8e5fd0964c6ae
+    git:
+      commitTitle: 'Merge pull request #8704 from erikgb/1-20-fix-vuln-go-deps...'
+      sha: e5b7b18450dd2c4b993b95bcd680b1a057205b00
+      tags:
+      - v1.20.2
+    path: .
+  path: _sources/cert-manager
+- contents:
+  - configDigest: d39ef48ca62d65bd3cd4347fcbadf03c9dbc889dde58784c3d23519f0dc8a73f
+    git:
+      commitTitle: Prepare for release v1.19.4...
+      sha: 95e477fdcfd35d438b135f4d981ee20ce3016ac3
+      tags:
+      - 1.19.4
+    path: .
+  path: _sources/cilium
+- contents:
+  - configDigest: f495ebf4c99e4765f78926b9693e2c7d8f792170e166f765336ff6b54c0ae8f8
+    git:
+      commitTitle: 'fix: requeue reconcillation after replica update (#189)'
+      sha: 491f9b3b3a39cff85c9afc0e5e645ed17dec77a8
+      tags:
+      - v0.0.5
+    path: .
+  path: _sources/clickhouse
+- contents:
+  - configDigest: 91ca4ead579f6b7854906cc3e52af96cde743b9e244f4da380f42b27c1dc120b
+    git:
+      commitTitle: Release cloudnative-pg-v0.28.2 (#871)...
+      sha: 1cc064ac89730116588783ef2f85cf0af9406e26
+      tags:
+      - cloudnative-pg-v0.28.2
+    path: .
+  path: _sources/cloudnative-pg
+- contents:
+  - configDigest: 925d9cd3db32d52212038d22ffafe69c3f37e2ba0c53d485dc4402da468213a0
+    git:
+      commitTitle: feat(operator):release version v1.5.0 (#486)...
+      sha: 2192d38824f712d203d6a490cb625a5e12526fe5
+      tags:
+      - v1.5.0
+    path: .
+  path: _sources/dragonflydb
+- contents:
+  - git:
+      commitTitle: 'feat(source/gateway-api)!: migrate Gateway and HTTPRoute to v1
+        (#6291)...'
+      sha: 066a11e2158f87689a01f0ff39493037da958171
+      tags:
+      - v0.21.0
+    path: .
+  path: _sources/external-dns
+- contents:
+  - git:
+      commitTitle: 'fix: provider/infisical provider sub-folder references in remoteRef.key
+        (#6338)...'
+      sha: 0755b0af7de7f05a104b0df29ba84f43513fee8b
+      tags:
+      - v2.5.0
+    path: .
+  path: _sources/external-secrets
+- contents:
+  - configDigest: 05b714b5ba5889db25152f1ebe7095d204709b1c0367d84728dcc74e732e4586
+    git:
+      commitTitle: '[release/v1.8] cherry-pick v1.8.0 (#8970)...'
+      sha: f7306b38f1ec3551cdbcb33ea01ad0903f9157fa
+      tags:
+      - v1.8.0
+    path: .
+  path: _sources/envoy-gateway
+- contents:
+  - configDigest: 28f869e07032955f9cc682d5f14ed04e2a0d1cba0e555222801cda73e38cc461
+    git:
+      commitTitle: 'Merge pull request #1500 from fluxcd/release-v1.5.5...'
+      sha: e99b6c7f141db0eb134214b8f8c873943076ace5
+      tags:
+      - v1.5.5
+    path: helm-controller
+  - configDigest: d9bd7e416e610bd7b3392af8ed5ce83a36c3f1d5d67db13eee5ce54b05602975
+    git:
+      commitTitle: 'Merge pull request #1295 from fluxcd/release-v1.8.4...'
+      sha: f98e1eb5aa97adbdbe33018d4b9dd1e47763fad0
+      tags:
+      - v1.8.4
+    path: notification-controller
+  - configDigest: 90d6f0a467aa8e39e3110656ad283bfdca21547dcc1e9db99054b8bdf1c9d470
+    git:
+      commitTitle: 'Merge pull request #1295 from fluxcd/release-v1.8.4...'
+      sha: f98e1eb5aa97adbdbe33018d4b9dd1e47763fad0
+      tags:
+      - v1.8.4
+    path: kustomize-controller
+  - configDigest: 59923a4c5e4b6d5a14032cee4aee71a81e82c7271e96a65fa07458044ec0e4ae
+    git:
+      commitTitle: 'Merge pull request #2058 from fluxcd/release-v1.8.5...'
+      sha: e9faef49c4f039ef57d58a3edfa481a3a25a5487
+      tags:
+      - v1.8.5
+    path: source-controller
+  path: _sources/fluxcd
+- contents:
+  - git:
+      commitTitle: Automated update for release v0.0.25
+      sha: fc9b433c54374deeb461db3bd8ea91084e589837
+      tags:
+      - v0.0.25
+    path: .
+  path: _sources/frr-k8s
+- contents:
+  - git:
+      commitTitle: 'chore: release 5.23.0 (#2713)'
+      sha: 4c77de5f58dd663bf779d9ddf8bda66c150654f8
+      tags:
+      - v5.23.0
+    path: .
+  path: _sources/grafana-operator
+- contents:
+  - git:
+      commitTitle: Patch 1.5.1 release. (#4685)...
+      sha: e7677b70ae75d14a4448fba94870e7deea6cf0ad
+      tags:
+      - conformance/v1.5.1
+    path: .
+  path: _sources/gateway-api
+- contents:
+  - configDigest: 2e07910860fc1e7fd0e9f16f606ff6521c146056ca6692ee23ed75a422f6c1ff
+    git:
+      commitTitle: '[2.3] bump: bumps various go deps (#14075)...'
+      sha: a1d781fe7843fb95d1e14986ad261bd2442b16ea
+      tags:
+      - v2.3.1
+    path: .
+  path: _sources/kgateway
+- contents:
+  - configDigest: 7fe1a5d45b2b5eb6091ca4820f9435c8605445e74853801e389754c7f4f03cc2
+    git:
+      commitTitle: 'chore: release v1.18.1 (#16126)...'
+      sha: ec14520a11cc25432482bfc0baa6a61d3c309524
+      tags:
+      - kyverno-chart-3.8.1
+    path: .
+  path: _sources/kyverno
+- contents:
+  - configDigest: 016f10dad66a73ffe8679c67c4135ae7a35ce79a3c90bbdb8e2f8af66aaa43a3
+    git:
+      commitTitle: '[prometheus-operator-crds] Update dependency prometheus-operator/prometheus-operator
+        to v0.91.0 (#6892)...'
+      sha: 7897ac7761509208307f5cfd8066f8a6fe5a33df
+      tags:
+      - prometheus-operator-crds-29.0.0
+    path: .
+  path: _sources/prometheus
+- contents:
+  - configDigest: dcbe0b74bd629d43f5367e4a30116724bec54ca9eb9bfc5c37453e19b14f3feb
+    git:
+      commitTitle: 'Merge pull request #17449 from obnoxxx/prep-v1.19.5...'
+      sha: d7816398d826d358f68b0d62f98b906559d335c4
+      tags:
+      - v1.19.5
+    path: .
+  path: _sources/rook
+- contents:
+  - configDigest: a1d4316407046dfd1e702754dde06b188c08c8a6c9101b9a81bb02ef6a74aaea
+    git:
+      commitTitle: Release v0.20.1 (#650)
+      sha: bac256ff9bf283eab6dcab7e0e739ae8c0138568
+      tags:
+      - v0.20.1
+    path: .
+  path: _sources/silence-operator
+- contents:
+  - configDigest: 1ff0758b2b646668fd5f08e1794543077fdb69d946738ec3d9b2f11c621480b8
+    git:
+      commitTitle: 'chore(main): release 0.1.35 (#284)...'
+      sha: ea701889ec6655e09ab785255a11a4c631fe9e36
+      tags:
+      - 0.1.35
+    path: .
+  path: _sources/tuppr
+- contents:
+  - configDigest: e1be80ecfdf0c9845285fce149009adae5bdf65cd73f6047cc4a6af7a790887d
+    git:
+      commitTitle: 'charts: Update victoriametrics/operator Docker tag to v0.70.1
+        (#2914)...'
+      sha: f6601faad6bb61e8cbb3870255d4ee32616165a7
+      tags:
+      - victoria-metrics-operator-0.63.1
+    path: .
+  path: _sources/victoria-metrics
+- contents:
+  - git:
+      commitTitle: 'Merge pull request #1924 from openshift-cherrypick-robot/cherry-pick-1923-to-release-0.15...'
+      sha: d2a30b46166b43f52e18020b52501f581e601ccf
+      tags:
+      - v0.15.0
+    path: .
+  path: _sources/volsync
+kind: LockConfig
