@@ -1,0 +1,28 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["github>soulwhisper/renovate-config"],
+  packageRules: [
+    {
+      description: "1Password operator: pin to v1.x — the 'v2' branch is stale and unreleased",
+      matchPackageNames: ["/1Password/onepassword-operator/"],
+      allowedVersions: "<2",
+    },
+    {
+      description: "Auto-merge GitHub Actions",
+      matchManagers: ["github-actions"],
+      automerge: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["minor", "patch", "digest"],
+      minimumReleaseAge: "3 days",
+      ignoreTests: true,
+    },
+    {
+      description: "Auto-merge CRD upstream bumps",
+      matchManagers: ["vendir"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["major", "minor", "patch"],
+      ignoreTests: false,
+    },
+  ],
+}
