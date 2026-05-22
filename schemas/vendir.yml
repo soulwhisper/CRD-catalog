@@ -1,0 +1,296 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  # ---------------------------------------------------------
+  # Folder : agentgateway
+  # ---------------------------------------------------------
+  - path: _sources/agentgateway
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/agentgateway/agentgateway
+          ref: v1.2.1
+        includePaths:
+          - controller/install/helm/agentgateway-crds/templates/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : cert-manager
+  # ---------------------------------------------------------
+  - path: _sources/cert-manager
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/cert-manager/cert-manager
+          ref: v1.20.2
+        includePaths:
+          - deploy/charts/cert-manager/templates/crd-*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : cilium
+  # ---------------------------------------------------------
+  - path: _sources/cilium
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/cilium/cilium
+          ref: v1.19.4
+        includePaths:
+          - pkg/k8s/apis/cilium.io/client/crds/v2alpha1/*.yaml
+          - pkg/k8s/apis/cilium.io/client/crds/v2/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : clickhouse
+  # ---------------------------------------------------------
+  - path: _sources/clickhouse
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/ClickHouse/clickhouse-operator
+          ref: v0.0.5
+        includePaths:
+          - config/crd/bases/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : cloudnative-pg
+  # ---------------------------------------------------------
+  - path: _sources/cloudnative-pg
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/cloudnative-pg/charts
+          ref: cloudnative-pg-v0.28.2
+        includePaths:
+          - "charts/cloudnative-pg/templates/crds/crds.yaml"
+          - "charts/plugin-barman-cloud/templates/crds/crds.yaml"
+
+  # ---------------------------------------------------------
+  # Folder : dragonflydb
+  # ---------------------------------------------------------
+  - path: _sources/dragonflydb
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/dragonflydb/dragonfly-operator
+          ref: v1.5.0
+        includePaths:
+          - charts/dragonfly-operator/templates/crds.yaml
+
+  # ---------------------------------------------------------
+  # Folder : external-dns
+  # ---------------------------------------------------------
+  - path: _sources/external-dns
+    contents:
+      - path: .
+        git:
+          url: https://github.com/kubernetes-sigs/external-dns
+          ref: v0.21.0
+        includePaths:
+          - config/crd/standard/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : external-secrets
+  # ---------------------------------------------------------
+  - path: _sources/external-secrets
+    contents:
+      - path: .
+        git:
+          url: https://github.com/external-secrets/external-secrets
+          ref: v2.5.0
+        includePaths:
+          - config/crds/bases/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : envoy-gateway
+  # ---------------------------------------------------------
+  - path: _sources/envoy-gateway
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/envoyproxy/gateway
+          ref: v1.8.0
+        includePaths:
+          - charts/gateway-crds-helm/templates/generated/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : fluxcd
+  # ---------------------------------------------------------
+  - path: _sources/fluxcd
+    contents:
+      - path: helm-controller
+        lazy: true
+        git:
+          url: https://github.com/fluxcd/helm-controller
+          ref: v1.5.5
+        includePaths:
+          - config/crd/bases/*.yaml
+      - path: notification-controller
+        lazy: true
+        git:
+          url: https://github.com/fluxcd/notification-controller
+          ref: v1.8.4
+        includePaths:
+          - config/crd/bases/*.yaml
+      - path: kustomize-controller
+        lazy: true
+        git:
+          url: https://github.com/fluxcd/notification-controller
+          ref: v1.8.5
+        includePaths:
+          - config/crd/bases/*.yaml
+      - path: source-controller
+        lazy: true
+        git:
+          url: https://github.com/fluxcd/source-controller
+          ref: v1.8.5
+        includePaths:
+          - config/crd/bases/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : frr-k8s
+  # ---------------------------------------------------------
+  - path: _sources/frr-k8s
+    contents:
+      - path: .
+        git:
+          url: https://github.com/metallb/frr-k8s
+          ref: v0.0.25
+        includePaths:
+          - charts/frr-k8s/charts/crds/templates/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : grafana-operator
+  # ---------------------------------------------------------
+  - path: _sources/grafana-operator
+    contents:
+      - path: .
+        git:
+          url: https://github.com/grafana/grafana-operator
+          ref: v5.23.0
+        includePaths:
+          - deploy/helm/grafana-operator/files/crds/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : gateway-api
+  # ---------------------------------------------------------
+  - path: _sources/gateway-api
+    contents:
+      - path: .
+        git:
+          url: https://github.com/kubernetes-sigs/gateway-api
+          ref: v1.5.1
+        includePaths:
+          - config/crd/experimental/gateway*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : kgateway
+  # ---------------------------------------------------------
+  - path: _sources/kgateway
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/kgateway-dev/kgateway
+          ref: v2.3.1
+        includePaths:
+          - install/helm/kgateway-crds/templates/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : kyverno
+  # ---------------------------------------------------------
+  - path: _sources/kyverno
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/kyverno/kyverno
+          ref: v1.18.1
+        includePaths:
+          - charts/kyverno/charts/crds/templates/kyverno.io/*.yaml
+          - charts/kyverno/charts/crds/templates/reports.kyverno.io/*.yaml
+          - charts/kyverno/charts/crds/templates/wgpolicyk8s.io/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : prometheus
+  # ---------------------------------------------------------
+  - path: _sources/prometheus
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/prometheus-community/helm-charts
+          ref: prometheus-operator-crds-29.0.0
+        includePaths:
+          - charts/prometheus-operator-crds/charts/crds/templates/crd-*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : rook
+  # ---------------------------------------------------------
+  - path: _sources/rook
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/rook/rook
+          ref: v1.19.5
+        includePaths:
+          - deploy/examples/crds.yaml
+          - deploy/olm/assemble/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : silence-operator
+  # ---------------------------------------------------------
+  - path: _sources/silence-operator
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/giantswarm/silence-operator
+          ref: v0.20.1
+        includePaths:
+          - helm/silence-operator/templates/crds.yml
+
+  # ---------------------------------------------------------
+  # Folder : tuppr
+  # ---------------------------------------------------------
+  - path: _sources/tuppr
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/home-operations/tuppr
+          ref: 0.1.35
+        includePaths:
+          - config/crd/bases/*.yaml
+
+  # ---------------------------------------------------------
+  # Folder : victoria-metrics
+  # ---------------------------------------------------------
+  - path: _sources/victoria-metrics
+    contents:
+      - path: .
+        lazy: true
+        git:
+          url: https://github.com/VictoriaMetrics/helm-charts
+          ref: victoria-metrics-operator-crds-0.10.1
+        includePaths:
+          - charts/victoria-metrics-operator/crd.yaml
+
+  # ---------------------------------------------------------
+  # Folder : volsync
+  # ---------------------------------------------------------
+  - path: _sources/volsync
+    contents:
+      - path: .
+        git:
+          url: https://github.com/backube/volsync
+          ref: v0.15.0
+        includePaths:
+          - config/crd/bases/*.yaml

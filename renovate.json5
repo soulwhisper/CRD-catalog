@@ -1,4 +1,23 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["github>soulwhisper/renovate-config"],
+  packageRules: [
+    {
+      description: "Auto-merge GitHub Actions non-major bumps",
+      matchManagers: ["github-actions"],
+      automerge: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["minor", "patch", "digest"],
+      minimumReleaseAge: "3 days",
+      ignoreTests: true,
+    },
+    {
+      description: "Auto-merge CRD upstream non-major bumps",
+      matchManagers: ["vendir"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["minor", "patch"],
+      ignoreTests: false,
+    },
+  ],
 }

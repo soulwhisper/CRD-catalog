@@ -9,7 +9,6 @@ on:
     paths:
       - sources/**
       - scripts/**
-      - .mise.toml
       - .github/workflows/release.yaml
   workflow_dispatch:
 
@@ -71,28 +70,9 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-
-      - name: Setup Mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-        with:
-          experimental: true
-          install_args: --locked
-
-      # Cache vendir's output AND (for kind sources) the extracted CRD YAML
-      # so re-runs short-circuit. Key includes vendir.yml, kind.yaml (if
-      # present), and the build scripts — any change to script logic forces
-      # a clean rebuild instead of reusing a stale output.yaml.
-      - name: Restore vendor cache
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        with:
-          path: out/vendor/${{ matrix.source.artifact }}
-          key: vendor-${{ runner.os }}-${{ matrix.source.name }}-${{ hashFiles(format('{0}/vendir.yml', matrix.source.dir), format('{0}/kind.yaml', matrix.source.dir), format('{0}/extract.yaml', matrix.source.dir), 'scripts/build.sh', 'scripts/kind-extract.sh') }}
-
-      - name: Extract CRDs
-        env:
-          VENDIR_GITHUB_API_TOKEN: ${{ github.token }}
-          VENDOR_CACHE: ${{ github.workspace }}/out/vendor/${{ matrix.source.artifact }}
-        run: mise run build "${{ matrix.source.dir }}" "${{ matrix.source.out }}"
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: nix develop -c bash scripts/build.sh "${{ matrix.source.dir }}" "${{ matrix.source.out }}"
 
       - name: Upload CRDs artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -111,7 +91,6 @@ jobs:
       contents: read
       pages: write
       id-token: write
-      packages: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -121,21 +100,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-        with:
-          experimental: true
-          install_args: --locked
-
-      - name: Download all CRDs artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          path: out/crds
-          pattern: crds-*
-          merge-multiple: true
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Render merged site
-        run: crd-schema-publisher convert -d out/crds -o out/site --render
+        run: ./scripts/crd-extractor.sh convert -d out/crds -o out/site --render
 
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
@@ -148,25 +117,6 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
-
-      - name: Login to GHCR
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
-
-      - name: Publish and sign OCI artifact
-        env:
-          REF_NAME: ${{ github.ref_name }}
-        run: |
-          digest=$(flux push artifact \
-            "oci://ghcr.io/${{ github.repository }}:latest" \
-            --path=out/site \
-            --source="${{ github.server_url }}/${{ github.repository }}" \
-            --revision="${REF_NAME}@sha1:${{ github.sha }}" \
-            --output=json | jq -r '.repository + "@" + .digest')
-          cosign sign --yes "$digest"
 
   status:
     if: ${{ !cancelled() }}

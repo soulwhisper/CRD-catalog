@@ -1,5 +1,3 @@
 .claude/
 .private/
 out/
-sources/**/vendir.lock.yml
-sources/**/vendor/

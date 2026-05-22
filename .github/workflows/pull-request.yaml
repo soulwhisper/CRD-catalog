@@ -64,24 +64,9 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-
-      - name: Setup Mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-        with:
-          experimental: true
-          install_args: --locked
-
-      - name: Restore vendor cache
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        with:
-          path: out/vendor/${{ matrix.source.artifact }}
-          key: vendor-${{ runner.os }}-${{ matrix.source.name }}-${{ hashFiles(format('{0}/vendir.yml', matrix.source.dir), format('{0}/kind.yaml', matrix.source.dir), format('{0}/extract.yaml', matrix.source.dir), 'scripts/build.sh', 'scripts/kind-extract.sh') }}
-
-      - name: Extract CRDs
-        env:
-          VENDIR_GITHUB_API_TOKEN: ${{ github.token }}
-          VENDOR_CACHE: ${{ github.workspace }}/out/vendor/${{ matrix.source.artifact }}
-        run: mise run build "${{ matrix.source.dir }}" "${{ matrix.source.out }}"
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: nix develop -c bash scripts/build.sh "${{ matrix.source.dir }}" "${{ matrix.source.out }}"
 
   status:
     if: ${{ !cancelled() }}

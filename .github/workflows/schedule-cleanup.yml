@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# yamllint disable rule:truthy
+
+name: Workflow-cleanup
+permissions:
+  actions: write
+  contents: read
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+jobs:
+  cleanup_runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
+        id: app-token
+        with:
+          client-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: Cleanup workflow stale runs
+        uses: Mattraks/delete-workflow-runs@b3018382ca039b53d238908238bd35d1fb14f8ee # v2
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+          repository: "${{ github.repository }}"
+          retain_days: "0"
+          keep_minimum_runs: "0"
+          delete_run_by_conclusion_pattern: "cancelled,skipped"
+      - name: Cleanup workflow success runs
+        uses: Mattraks/delete-workflow-runs@b3018382ca039b53d238908238bd35d1fb14f8ee # v2
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+          repository: "${{ github.repository }}"
+          retain_days: "0"
+          keep_minimum_runs: "3"
+          delete_run_by_conclusion_pattern: "success"
+      - name: Clenaup workflow failure runs
+        uses: Mattraks/delete-workflow-runs@b3018382ca039b53d238908238bd35d1fb14f8ee # v2
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+          repository: "${{ github.repository }}"
+          retain_days: "0"
+          keep_minimum_runs: "1"
+          delete_run_by_conclusion_pattern: "action_required,failure"
