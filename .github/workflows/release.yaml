@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# yamllint disable rule:truthy
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - schemas/_sources/**
+      - scripts/**
+      - justfile
+      - flake.nix
+      - flake.lock
+      - .github/workflows/release.yaml
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@00199f951aeb9404028a6e4b95ad42546f73296a # main
+      - uses: DeterminateSystems/magic-nix-cache-action@908b263ff629f4cc17666315b7fd3ec127c6244d # main
+      - name: Prepare schemas
+        run: |
+          nix develop -c just prepare
+          mkdir -p out/site
+          chmod 777 out/site
+      - name: Render schemas + HTML site
+        uses: docker://ghcr.io/sholdee/crd-schema-publisher:v2026.519.317@sha256:9e1bb54c09f3d72614f2911eb00981f344dfcb9ad34b44bf396a200a69868806
+        env:
+          BASE_PATH: "/k8s-schemas"
+        with:
+          args: convert -d /github/workspace/out/_clean -o /github/workspace/out/site --render
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: out/site
+
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+  status:
+    if: ${{ !cancelled() }}
+    needs: [build, deploy]
+    name: Status
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - run: |
+          if [[ "${{ contains(needs.*.result, 'failure') }}" == "true" ]]; then
+            exit 1
+          fi
+          echo "ok"

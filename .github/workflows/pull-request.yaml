@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# yamllint disable rule:truthy
+name: Pull Request
+
+on:
+  merge_group:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@00199f951aeb9404028a6e4b95ad42546f73296a # main
+      - uses: DeterminateSystems/magic-nix-cache-action@908b263ff629f4cc17666315b7fd3ec127c6244d # main
+      - name: Build schemas
+        run: nix develop -c just build
+
+  # Aggregator: always reports a status, so this is the single check to
+  # require in the branch ruleset. Stays green when build is skipped/passes,
+  # red when build fails.
+  status:
+    if: ${{ !cancelled() }}
+    needs: build
+    name: Status
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Check upstream results
+        run: |
+          if [[ "${{ contains(needs.*.result, 'failure') }}" == "true" ]]; then
+            exit 1
+          fi
+          echo "ok"
