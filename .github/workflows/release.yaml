@@ -8,7 +8,7 @@ on:
     branches: [main]
     paths:
       - schemas/_sources/**
-      - scripts/openapi2jsonschema.py
+      - scripts/**
       - justfile
       - flake.nix
       - flake.lock
@@ -33,11 +33,13 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Build schemas
-        run: nix develop -c just build
+        run: |
+          nix develop -c just build
+          # nix develop -c just _all
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          path: out
+          path: out # use 'out/site' if 'just _all'
 
   deploy:
     needs: build

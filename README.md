@@ -21,6 +21,7 @@ I got help from some cool repo like:
 - [bjw-s/home-ops](https://github.com/bjw-s-labs/home-ops/tree/8cc0a68f5d86c7dece9f91d4e83ac2903075e0ad/kubernetes/apps/jobs/publish-k8s-schemas)(how to push)
 - [bjw-s-labs/CRD-catalog](https://github.com/bjw-s-labs/CRD-catalog)
 - [home-operations/k8s-schemas](https://github.com/home-operations/k8s-schemas)
+- [sholdee/crd-schema-publisher](https://github.com/sholdee/crd-schema-publisher)
 
 ---
 
