@@ -32,14 +32,20 @@ jobs:
           persist-credentials: false
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: Build schemas
+      - name: Prepare output dir
         run: |
-          nix develop -c just build
-          # nix develop -c just _all
+          mkdir -p out/site
+          chmod 777 out/site
+      - name: Render schemas + HTML site
+        uses: docker://ghcr.io/sholdee/crd-schema-publisher:v2026.519.317
+        with:
+          args: convert -d /github/workspace/out/_clean -o /github/workspace/out/site --render
+      - name: Strip internal metadata before publish
+        run: rm -rf out/site/_meta
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          path: out # use 'out/site' if 'just _all'
+          path: out/site
 
   deploy:
     needs: build

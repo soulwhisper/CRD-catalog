@@ -14,11 +14,6 @@ default:
 sync:
   cd ./schemas && vendir sync
 
-[doc('Build JSON schemas')]
-[script]
-build:
-  python3 ./scripts/openapi2jsonschema.py "${SRC_DIR}" "${OUT_DIR}"
-
 [doc('Strip helm + flatten _sources into out/_clean')]
 [script]
 prepare:

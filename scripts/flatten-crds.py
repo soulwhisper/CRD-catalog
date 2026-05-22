@@ -19,12 +19,21 @@ def main(src: Path, dst: Path) -> int:
         try:
             docs = list(yaml.safe_load_all(strip_helm(path.read_text("utf-8"))))
         except yaml.YAMLError as e:
-            print(f"warn: skipping {path}: {e}", file=sys.stderr); continue
+            print(f"warn: skipping {path}: {e}", file=sys.stderr)
+            continue
         for doc in docs:
-            if isinstance(doc, dict) and doc.get("kind") == "CustomResourceDefinition":
-                name = doc.get("metadata", {}).get("name", f"crd-{n}")
-                (dst / f"{n:04d}-{name}.yaml").write_text(yaml.safe_dump(doc), "utf-8")
-                n += 1
+            if not (isinstance(doc, dict) and doc.get("kind") == "CustomResourceDefinition"):
+                continue
+            api = doc.get("apiVersion", "")
+            if api != "apiextensions.k8s.io/v1":
+                print(f"warn: {path}: unsupported {api}", file=sys.stderr)
+                continue
+            name = doc.get("metadata", {}).get("name")
+            if not name:
+                print(f"warn: {path}: CRD missing metadata.name", file=sys.stderr)
+                continue
+            (dst / f"{name}.yaml").write_text(yaml.safe_dump(doc), "utf-8")
+            written += 1
     print(f"flattened {n} CRDs to {dst}", file=sys.stderr)
     return 0 if n else 1
 

@@ -28,7 +28,7 @@ jobs:
   # red when build fails.
   status:
     if: ${{ !cancelled() }}
-    needs: [build]
+    needs: build
     name: Status
     runs-on: ubuntu-latest
     permissions: {}

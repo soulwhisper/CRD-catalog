@@ -13,10 +13,13 @@ on:
     branches: [main]
     paths:
       - schemas/vendir.yml
-      - schemas/vendir.lock.yml
 
 jobs:
   sync:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' &&
+       !startsWith(github.event.pull_request.title, 'chore(deps): sync resources managed by vendir'))
     runs-on: ubuntu-latest
     steps:
       - name: Generate Token
